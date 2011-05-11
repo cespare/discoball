@@ -28,7 +28,7 @@ Examples
 
         $ ps -ef | discoball --one_color --match '/usr/sbin/.*$'
 
-  * I wrote discoball for use with Steve Losh's todo-list tool, [t](https://github.com/sjl/t). I put tags on
+  * I wrote discoball for use with [Steve Losh's todo-list tool, t](https://github.com/sjl/t). I put tags on
     my tasks annotated with `+`:
 
         $ t Make an appointment with the dentist +health
@@ -37,7 +37,23 @@ Examples
 
         $ t | discoball '\+\S+'
 
-    (I have this aliased in bash to `tl` for ease of use.)
+    I can even do some fancier stuff to list particular labels. I have the following function defined in my
+    `.bashrc`:
+
+    ``` bash
+    function tl() {
+      if [ -z  "$1" ]; then
+        t | discoball '\+\S+'
+      else
+        t | discoball -m "\+$1"
+      fi
+    }
+    ```
+
+    I can use this as follows:
+
+        $ tl        # ~> Show the list of tasks, with tags highlighted
+        $ tl health # ~> Show only tasks tagged with 'health'
 
 Installation
 ------------
