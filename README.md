@@ -13,8 +13,8 @@ Examples:
 
   * Highlight instances of "foo" and "bar" in the text of `myfile.txt`:
 
-      $ cat myfile.txt | discoball foo bar
+        $ cat myfile.txt | discoball foo bar
 
   * Highlight paths of processes running out of `/usr/sbin/`:
 
-      $ ps -ef | discoball '/usr/sbin/.*$'
+        $ ps -ef | discoball '/usr/sbin/.*$'
