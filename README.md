@@ -27,7 +27,7 @@ Examples
 
   * Highlight paths of processes running out of `/usr/sbin/`:
 
-        $ ps -ef | discoball --one-color --match '/usr/sbin/.*$'
+        $ ps -ef | discoball --one-color --match-any '/usr/sbin/.*$'
 
   * I wrote discoball for use with [Steve Losh's todo-list tool, t](https://github.com/sjl/t). I put tags on
     my tasks annotated with `+` (inspired by [Todo.txt](http://todotxt.com/)):
