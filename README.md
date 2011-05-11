@@ -56,6 +56,10 @@ Examples
         $ tl               # ~> Show the list of tasks, with tags highlighted
         $ tl health urgent # ~> Show only tasks tagged with 'health' and 'urgent'
 
+    Demo:
+
+    ![Discoball + t demo](http://i.imgur.com/tVQMm.png)
+
 Installation
 ------------
 
