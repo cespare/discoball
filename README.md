@@ -14,7 +14,8 @@ where options are:
 
   * `--group-colors` or `-g`: Color all matches of the same pattern with the same color
   * `--one-color` or `-o`: Highlight all matches with a single color
-  * `--match` or `-m`: Only print lines with matches
+  * `--match-any` or `-m`: Only print lines matching an input pattern
+  * `--match-all` or `-a`: Only print lines matching all input patterns
   * `--help` or `-h`: Print the help message
 
 Examples
@@ -45,15 +46,15 @@ Examples
       if [ -z  "$1" ]; then
         t | discoball '\+\S+'
       else
-        t | discoball -m "\+$1"
+        t | discoball -a "${@/#/\+}"
       fi
     }
     ```
 
     I can use this as follows:
 
-        $ tl        # ~> Show the list of tasks, with tags highlighted
-        $ tl health # ~> Show only tasks tagged with 'health'
+        $ tl               # ~> Show the list of tasks, with tags highlighted
+        $ tl health urgent # ~> Show only tasks tagged with 'health' and 'urgent'
 
 Installation
 ------------

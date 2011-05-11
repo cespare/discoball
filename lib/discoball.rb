@@ -7,16 +7,19 @@ module Discoball
   SINGLE_COLOR = :blue
 
   class Highlighter
-    # Patterns is an array of patterns to match. There are three options that can be changed:
-    #   * If color_mode is :individual, then each unique string matching one of the patterns will be a
-    #       different color.
-    #   * If color_mode is :group_colors, then the matches corresponding to each pattern will be the same color.
-    #   * If color_mode is :one_color, then all matches will be a single color.
-    #   * If match_only is set, then only matching lines will be returned.
-    def initialize(patterns, color_mode = :individual, match_only = false)
+    # Patterns is an array of patterns to match. There are two options that can be changed:
+    #   * color_mode
+    #     -:individual - each unique string matching one of the patterns will be a different color.
+    #     -:group_colors - the matches corresponding to each pattern will be the same color.
+    #     -:one_color - all matches will be a single color.
+    #   * match_mode
+    #     -:all - all lines are returned
+    #     -:match_any - lines matching any pattern are returned
+    #     -:match_all - only lines matching every pattern are returned
+    def initialize(patterns, color_mode = :individual, match_mode = :all)
       @patterns = patterns
       @color_mode = color_mode
-      @match_only = match_only
+      @match_mode = match_mode
       @color_stack = String.colors.reject { |color| UNUSABLE_COLORS.any? { |unusable| color =~ unusable } }
       @color_assignments = {}
       if color_mode == :group_colors
@@ -25,21 +28,29 @@ module Discoball
     end
 
     def filter(line)
-      match_found = false
+      match_found = {}
+      @patterns.each { |pattern| match_found[pattern] = false }
+
       case @color_mode
       when :one_color
-        matches = @patterns.flat_map { |pattern| line.scan(pattern) }.uniq
-        match_found ||= !matches.empty?
+        matches = @patterns.flat_map { |pattern|
+          m = line.scan(pattern)
+          match_found[pattern] = true unless m.empty?
+          m
+        }.uniq
         matches.each { |match| highlight!(line, match, SINGLE_COLOR) }
       when :group_colors
         @patterns.each do |pattern|
           matches = line.scan(pattern).uniq
-          match_found ||= !matches.empty?
+          match_found[pattern] = true unless matches.empty?
           matches.each { |match| highlight!(line, match, @color_assignments[pattern]) }
         end
       when :individual
-        matches = @patterns.flat_map { |pattern| line.scan(pattern) }.uniq
-        match_found ||= !matches.empty?
+        matches = @patterns.flat_map { |pattern|
+          m = line.scan(pattern)
+          match_found[pattern] = true unless m.empty?
+          m
+        }.uniq
         matches.each do |match|
           unless @color_assignments.include? match
             @color_assignments[match] = pop_rotate
@@ -47,7 +58,15 @@ module Discoball
           matches.each { |match| highlight!(line, match, @color_assignments[match]) }
         end
       end
-      (@match_only && !match_found) ? nil : line
+
+      case @match_mode
+      when :match_any
+        match_found.any? { |pattern, found| found } ? line : nil
+      when :match_all
+        match_found.all? { |pattern, found| found } ? line : nil
+      else
+        line
+      end
     end
 
     private
