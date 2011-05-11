@@ -29,7 +29,7 @@ Examples
         $ ps -ef | discoball --one_color --match '/usr/sbin/.*$'
 
   * I wrote discoball for use with [Steve Losh's todo-list tool, t](https://github.com/sjl/t). I put tags on
-    my tasks annotated with `+`:
+    my tasks annotated with `+` (inspired by [Todo.txt](http://todotxt.com/)):
 
         $ t Make an appointment with the dentist +health
 
