@@ -79,7 +79,7 @@ module Discoball
     # Get the next color and put it at the back
     def pop_rotate
       color = @color_stack.pop
-      @color_stack.insert(0, color)
+      @color_stack.unshift color
       color
     end
   end
