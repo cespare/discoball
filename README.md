@@ -17,4 +17,4 @@ Examples:
 
   * Highlight paths of processes running out of `/usr/sbin/`:
 
-      $ ps -ef | discoball '\/usr/\/sbin\/.*$'
+      $ ps -ef | discoball '/usr/sbin/.*$'
