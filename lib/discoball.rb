@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require "rubygems"
 require "colorize"
 
 module Discoball
@@ -33,10 +34,10 @@ module Discoball
 
       case @color_mode
       when :one_color
-        matches = @patterns.flat_map { |pattern|
+        matches = @patterns.reduce([]) { |memo, pattern| # No Array#flat_map in Ruby 1.8 :\
           m = line.scan(pattern)
           match_found[pattern] = true unless m.empty?
-          m
+          memo += m
         }.uniq
         matches.each { |match| highlight!(line, match, SINGLE_COLOR) }
       when :group_colors
@@ -46,10 +47,10 @@ module Discoball
           matches.each { |match| highlight!(line, match, @color_assignments[pattern]) }
         end
       when :individual
-        matches = @patterns.flat_map { |pattern|
+        matches = @patterns.reduce([]) { |memo, pattern|
           m = line.scan(pattern)
           match_found[pattern] = true unless m.empty?
-          m
+          memo += m
         }.uniq
         matches.each do |match|
           unless @color_assignments.include? match
