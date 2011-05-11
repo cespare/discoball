@@ -10,8 +10,15 @@ Usage
 
     $ discoball [options] <pattern1 pattern2 ...>
 
+where options are:
+
+  * `--group-colors` or `-g`: Color all matches of the same pattern with the same color
+  * `--one-color` or `-o`: Highlight all matches with a single color
+  * `--match` or `-m`: Only print lines with matches
+  * `--help` or `-h`: Print the help message
+
 Examples
---------
+------------------
 
   * Highlight instances of "foo" and "bar" in the text of `myfile.txt`:
 
@@ -19,7 +26,18 @@ Examples
 
   * Highlight paths of processes running out of `/usr/sbin/`:
 
-        $ ps -ef | discoball '/usr/sbin/.*$'
+        $ ps -ef | discoball --one_color --match '/usr/sbin/.*$'
+
+  * I wrote discoball for use with Steve Losh's todo-list tool, [t](https://github.com/sjl/t). I put tags on
+    my tasks annotated with `+`:
+
+        $ t Make an appointment with the dentist +health
+
+    When I list my tasks (using `t`), I use discoball to highlight the tags with different colors:
+
+        $ t | discoball '\+\S+'
+
+    (I have this aliased in bash to `tl` for ease of use.)
 
 Installation
 ------------
