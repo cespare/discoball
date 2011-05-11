@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "discoball"
+
+highlighter = Discoball::Highlighter.new(ARGV.map { |pattern| Regexp.new(pattern) })
+STDIN.each { |line| puts highlighter.filter(line) }
