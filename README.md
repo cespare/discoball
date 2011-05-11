@@ -5,11 +5,13 @@ discoball
 except that it can highlight multiple patterns (in different colors). Patterns are arbitrary ruby regexes that
 are matched against the entire line.
 
-Usage:
+Usage
+-----
 
     $ discoball [options] <pattern1 pattern2 ...>
 
-Examples:
+Examples
+--------
 
   * Highlight instances of "foo" and "bar" in the text of `myfile.txt`:
 
@@ -18,3 +20,9 @@ Examples:
   * Highlight paths of processes running out of `/usr/sbin/`:
 
         $ ps -ef | discoball '/usr/sbin/.*$'
+
+Installation
+------------
+
+The easiest way to get `discoball` is by using RubyGems: `$ gem install discoball`. You can also clone the git
+repository at `git://github.com/cespare/discoball.git` if you want the latest code.
