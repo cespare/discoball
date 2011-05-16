@@ -63,5 +63,4 @@ Examples
 Installation
 ------------
 
-The easiest way to get `discoball` is by using RubyGems: `$ gem install discoball`. You can also clone the git
-repository at `git://github.com/cespare/discoball.git` if you want the latest code.
+The easiest way to get `discoball` is by using pip (or easy_install): `$ pip install discoball`. 
