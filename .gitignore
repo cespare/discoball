@@ -1,1 +1,4 @@
-*.gem
+*.swp
+*.pyc
+dist/
+MANIFEST
