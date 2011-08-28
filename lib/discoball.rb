@@ -35,38 +35,20 @@ module Discoball
       case @color_mode
       when :one_color
         matches = @patterns.reduce([]) { |memo, pattern| # No Array#flat_map in Ruby 1.8 :\
-          m = line.scan(pattern).map do |mstr|
-            if mstr.class == Array # Has group(s)
-              mstr[0]
-            else
-              mstr
-            end
-          end
+          m = line.scan(pattern).map { |match| match.is_a?(Array) ? match.first : match }
           match_found[pattern] = true unless m.empty?
           memo += m
         }.uniq
         matches.each { |match| highlight!(line, match, SINGLE_COLOR) }
       when :group_colors
         @patterns.each do |pattern|
-          matches = line.scan(pattern).map do |mstr|
-            if mstr.class == Array
-              mstr[0]
-            else
-              mstr
-            end
-          end.uniq
+          matches = line.scan(pattern).map { |match| match.is_a?(Array) ? match.first : match }.uniq
           match_found[pattern] = true unless matches.empty?
           matches.each { |match| highlight!(line, match, @color_assignments[pattern]) }
         end
       when :individual
         matches = @patterns.reduce([]) { |memo, pattern|
-          m = line.scan(pattern).map do |mstr|
-            if mstr.class == Array
-              mstr[0]
-            else
-              mstr
-            end
-          end
+          m = line.scan(pattern).map { |match| match.is_a?(Array) ? match.first : match }
           match_found[pattern] = true unless m.empty?
           memo += m
         }.uniq
