@@ -3,7 +3,7 @@ discoball
 
 `discoball` is a tool to filter streams and colorize patterns. It functions somewhat like `egrep --color`,
 except that it can highlight multiple patterns (in different colors). Patterns are arbitrary ruby regexes that
-are matched against the entire line. If the regex contains groupd, only the first group's match text is
+are matched against the entire line. If the regex contains groups, only the first group's match text is
 highlighted.
 
 Usage
