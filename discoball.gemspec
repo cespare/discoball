@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.summary = "A simple stream filter to highlight patterns"
   s.homepage = "http://github.com/cespare/discoball"
   s.rubyforge_project = "discoball"
+  s.license = "MIT"
 
   s.executables = %w(discoball)
   s.files = %w(
